@@ -1,20 +1,20 @@
-import Account from "@/src/components/screens/Account";
+import Requests from "@/src/components/screens/Requests";
 import DashboardNavLayout from "@/src/layouts/DashboardNavLayout";
 import Head from "next/head";
 
 import { ReactElement } from "react";
 
-export default function AccountPage() {
+export default function RequestPage() {
   return (
     <>
       <Head>
-        <title>Pick N' Play | Account Management</title>
+        <title> Request Sport/Field | Pick N' Play</title>
       </Head>
-      <Account />
+      <Requests />
     </>
   );
 }
 
-AccountPage.getLayout = (page: ReactElement) => {
+RequestPage.getLayout = (page: ReactElement) => {
   return <DashboardNavLayout>{page}</DashboardNavLayout>;
 };
