@@ -1,4 +1,4 @@
-const ProfileIcon = ({ playerFirstInitial }: string) => {
+const ProfileIcon = ({ playerFirstInitial }: any) => {
   return (
     <svg
       width={44}

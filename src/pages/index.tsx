@@ -4,16 +4,17 @@ import sportsbg from "../assets/sportsbg.jpeg";
 import Header from "../components/Header";
 import { useEffect } from "react";
 import { Box, Button, Typography } from "@mui/material";
+import { usePlayer } from "../components/hooks/data";
 
 function Landing() {
   const router = useRouter();
-  // const loggedInPlayer = useSelector(selectLoggedInPlayer); // Uncomment if needed
+  const { data: player } = usePlayer();
 
-  //   useEffect(() => {
-  //     if (loggedInPlayer) {
-  //       router.push("/welcome");
-  //     }
-  //   }, [loggedInPlayer, router]);
+  useEffect(() => {
+    if (player) {
+      router.push("/home");
+    }
+  }, [player, router]);
 
   return (
     <Box

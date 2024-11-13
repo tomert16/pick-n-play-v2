@@ -16,7 +16,7 @@ function Signup() {
 
   const [errors, setErrors] = useState<string>("");
 
-  const handleSignup = async (e) => {
+  const handleSignup = async (e: any) => {
     e.preventDefault();
     const newPlayer = {
       email: emailInput,

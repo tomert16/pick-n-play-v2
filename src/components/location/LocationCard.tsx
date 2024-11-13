@@ -6,18 +6,24 @@ import { useRouter } from "next/router";
 //   updateLocation,
 // } from "../../redux/players/playersSlice";
 import { Box, Typography } from "@mui/material";
+import { createClient } from "@/utils/supabase/client";
+import { usePlayer } from "../hooks/data";
 
 function LocationCard({ location }) {
   const router = useRouter();
-  // const dispatch = useDispatch();
-  // const loggedInPlayer = useSelector(selectLoggedInPlayer);
+  const supabase = createClient();
+  const { data: player } = usePlayer();
   const [mouseOverImage, setMouseOverImage] = useState(1);
   const [mouseOverInfo, setMouseOverInfo] = useState(0);
 
-  // const handleSetLocation = () => {
-  //   const id = loggedInPlayer.id;
-  //   dispatch(updateLocation({ location, id }));
-  // };
+  const handleSetLocation = async (location: any) => {
+    const playerLocation = `${location.city}, ${location.state}`;
+    console.log("LOCATION", playerLocation);
+    await supabase
+      .from("profiles")
+      .update({ location: playerLocation })
+      .eq("id", player.id!);
+  };
 
   return (
     <Box
@@ -31,9 +37,9 @@ function LocationCard({ location }) {
         cursor: "pointer",
       }}
       onClick={() => {
-        router.push(`/locations/${location.id}`);
+        // router.push(`/locations/${location.id}`);
         handleSetLocation(location);
-        window.location.reload();
+        // window.location.reload();
       }}
       onMouseOver={() => {
         setMouseOverImage(0.3);

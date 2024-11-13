@@ -1,6 +1,7 @@
-import { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode, useEffect } from "react";
 import { AppProps } from "next/app";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { useRouter } from "next/router";
 
 export type NextPageWithLayout = AppProps["Component"] & {
   getLayout?: (page: ReactElement) => ReactNode;

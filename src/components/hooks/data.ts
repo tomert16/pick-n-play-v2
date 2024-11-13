@@ -32,3 +32,13 @@ export function useSports() {
     return data;
   });
 }
+
+export function useLocations() {
+  const supabase = createClient();
+
+  return useQuery("locations", async () => {
+    const { data } = await supabase.from("locations").select("*");
+
+    return data;
+  });
+}
