@@ -6,7 +6,7 @@ import LocationCard from "../location/LocationCard";
 import { Box, Typography } from "@mui/material";
 
 function Welcome() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const router = useRouter();
 
   // Fetch all locations

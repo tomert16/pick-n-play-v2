@@ -1,22 +1,22 @@
-import Signup from "@/src/components/screens/Signup";
+import CompleteProfile from "@/src/components/screens/CompleteProfile";
 import InitialNavLayout from "@/src/layouts/InitialNavLayout";
 import Head from "next/head";
 // import { getUnauthProps } from '@/lib/auth';
 import { ReactElement } from "react";
 
-export default function SignupPage() {
+export default function CompleteProfilePage() {
   return (
     <>
       <Head>
         <title>Sign Up | Pick N' Play</title>
       </Head>
-      <Signup />
+      <CompleteProfile />
     </>
   );
 }
 
 // export const getServerSideProps = getUnauthProps;
 
-SignupPage.getLayout = (page: ReactElement) => {
+CompleteProfilePage.getLayout = (page: ReactElement) => {
   return <InitialNavLayout>{page}</InitialNavLayout>;
 };

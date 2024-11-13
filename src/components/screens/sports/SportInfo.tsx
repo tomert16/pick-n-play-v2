@@ -9,8 +9,8 @@ import {
   Button,
   TextField,
 } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import MeetUpList from "../components/sport/MeetUpsList";
+// import { useDispatch, useSelector } from "react-redux";
+// import MeetUpList from "../components/sport/MeetUpsList";
 import {
   fetchSportById,
   isLoadingData,
@@ -18,32 +18,32 @@ import {
 } from "../redux/sports/sportsSlice";
 import { addNewMeetUp } from "../redux/meetUps/meetUpsSlice";
 import { selectLoggedInPlayer } from "../redux/players/playersSlice";
-import Pagination from "../ui/Pagination";
-import Loader from "../ui/Loader";
+// import Pagination from "../ui/Pagination";
+// import Loader from "../ui/Loader";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { ToastContainer } from "react-toastify";
-import { successfullyCreated, unsuccessfullyCreated } from "../ui/Toastify";
+// import { successfullyCreated, unsuccessfullyCreated } from "../ui/Toastify";
 
 function SportInfo({ setSelectedMeetUp, locations }) {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const router = useRouter();
   const { id } = router.query;
-  const loggedInPlayer = useSelector(selectLoggedInPlayer);
+  // const loggedInPlayer = useSelector(selectLoggedInPlayer);
   const [date, setDate] = useState("");
   const [location, setLocation] = useState();
   const [formToggle, setFormToggle] = useState(false);
   const [amountOfMeetUps, setAmountOfMeetUps] = useState();
   const [currentSlide, setCurrentSlide] = useState(1);
   // loading function
-  const loading = useSelector(isLoadingData);
+  // const loading = useSelector(isLoadingData);
 
   // fetch individual sport
-  const individualSport = useSelector(selectSportById);
-  useEffect(() => {
-    if (id) {
-      dispatch(fetchSportById(id));
-    }
-  }, [dispatch, id]);
+  // const individualSport = useSelector(selectSportById);
+  // useEffect(() => {
+  //   if (id) {
+  //     dispatch(fetchSportById(id));
+  //   }
+  // }, [dispatch, id]);
 
   const handleFormToggle = () => {
     setFormToggle(true);
@@ -56,8 +56,8 @@ function SportInfo({ setSelectedMeetUp, locations }) {
       sport_id: parseInt(individualSport.id),
       player_id: parseInt(loggedInPlayer.id),
     };
-    const addNew = await dispatch(addNewMeetUp(newMeetUp));
-    await dispatch(fetchSportById(id));
+    // const addNew = await dispatch(addNewMeetUp(newMeetUp));
+    // await dispatch(fetchSportById(id));
     if (!addNew.error) {
       setFormToggle(false);
       successfullyCreated();

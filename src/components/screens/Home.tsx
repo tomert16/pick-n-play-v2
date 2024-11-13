@@ -10,9 +10,13 @@ import NavBar from "../NavBar";
 //   fetchLocationById,
 // } from "../redux/locations/locationsSlice";
 import { Container } from "@mui/material";
+import { useSports } from "../hooks/data";
 
 function Home({ loggedInPlayer }) {
   const [sportFieldToggle, setSportFieldToggle] = useState(true);
+  const { data: sports } = useSports();
+
+  console.log("SPORTS", sports);
 
   // const { id } = useParams();
   // const dispatch = useDispatch();
@@ -33,11 +37,7 @@ function Home({ loggedInPlayer }) {
         setSportFieldToggle={setSportFieldToggle}
         isHome={true}
       /> */}
-      {/* {sportFieldToggle ? (
-        <SportsList individualLocation={individualLocation} />
-      ) : (
-        <FieldList individualLocation={individualLocation} />
-      )} */}
+      {sportFieldToggle ? <SportsList /> : <FieldList />}
     </Container>
   );
 }

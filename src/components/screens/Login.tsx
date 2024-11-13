@@ -5,10 +5,11 @@ import Header from "../Header";
 // import { useDispatch } from "react-redux";
 // import { logIn } from "../redux/players/playersSlice";
 import { Box, Container, Typography, Button, TextField } from "@mui/material";
+import { createClient } from "@/utils/supabase/client";
 
 const Login = () => {
   const router = useRouter();
-  // const dispatch = useDispatch();
+  const supabase = createClient();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -17,8 +18,8 @@ const Login = () => {
     try {
       e.preventDefault();
       const data = { email, password };
-      // await dispatch(logIn(data));
-      router.push(`/welcome`);
+      await supabase.auth.signInWithPassword(data);
+      router.push(`/home`);
     } catch (err) {
       setError("Incorrect email or password");
     }

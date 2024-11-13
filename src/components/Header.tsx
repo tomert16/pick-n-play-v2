@@ -7,7 +7,6 @@ import { Box, Button } from "@mui/material";
 function Header({ isAdmin = false, login = false }) {
   const router = useRouter();
   const isLogin = router.asPath.includes("login");
-  console.log("HEADRER IS RENDERED");
   return (
     <Box
       sx={{
