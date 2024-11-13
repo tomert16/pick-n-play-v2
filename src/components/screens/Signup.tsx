@@ -4,31 +4,27 @@ import { useRouter } from "next/router";
 
 // import { createNewPlayer } from "../redux/players/playersSlice";
 import { Box, Button, Typography, TextField, Container } from "@mui/material";
+import { createClient } from "@/utils/supabase/client";
 
 function Signup() {
+  const supabase = createClient();
   const router = useRouter();
   //   const dispatch = useDispatch();
 
-  const [firstNameInput, setFirstNameInput] = useState("");
-  const [lastNameInput, setLastNameInput] = useState("");
-  const [emailInput, setEmailInput] = useState("");
-  const [passwordInput, setPasswordInput] = useState("");
-  const [passwordConfirmationInput, setPasswordConfirmationInput] =
-    useState("");
-  const [errors, setErrors] = useState("");
+  const [emailInput, setEmailInput] = useState<string>("");
+  const [passwordInput, setPasswordInput] = useState<string>("");
+
+  const [errors, setErrors] = useState<string>("");
 
   const handleSignup = async (e) => {
     e.preventDefault();
     const newPlayer = {
-      first_name: firstNameInput,
-      last_name: lastNameInput,
       email: emailInput,
       password: passwordInput,
-      passwordConfirmation: passwordConfirmationInput,
     };
     try {
-      // await dispatch(createNewPlayer(newPlayer));
-      router.push("/welcome");
+      await supabase.auth.signUp(newPlayer);
+      router.push("/signup/complete-profile");
     } catch (err) {
       setErrors("Invalid information");
     }
@@ -58,28 +54,10 @@ function Signup() {
           maxWidth: "500px",
         }}
       >
-        <Typography variant="h4" component="h2" sx={{ mb: 2 }}>
+        <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
           Sign Up
         </Typography>
         <form onSubmit={handleSignup}>
-          <TextField
-            fullWidth
-            label="First Name"
-            type="text"
-            value={firstNameInput}
-            onChange={(e) => setFirstNameInput(e.target.value)}
-            required
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            fullWidth
-            label="Last Name"
-            type="text"
-            value={lastNameInput}
-            onChange={(e) => setLastNameInput(e.target.value)}
-            required
-            sx={{ mb: 2 }}
-          />
           <TextField
             fullWidth
             label="Email"
@@ -98,15 +76,7 @@ function Signup() {
             required
             sx={{ mb: 2 }}
           />
-          <TextField
-            fullWidth
-            label="Confirm Password"
-            type="password"
-            value={passwordConfirmationInput}
-            onChange={(e) => setPasswordConfirmationInput(e.target.value)}
-            required
-            sx={{ mb: 2 }}
-          />
+
           <Button
             type="submit"
             variant="contained"

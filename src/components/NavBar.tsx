@@ -5,6 +5,9 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import pnplogo from "../assets/pnplogo.png";
 import { Box, Container, Button } from "@mui/material";
+import ProfileIcon from "../shared/icons/ProfileIcon";
+import { createClient } from "@/utils/supabase/client";
+import { usePlayer } from "./hooks/data";
 
 function NavBar({
   setSportFieldToggle,
@@ -13,6 +16,8 @@ function NavBar({
   handleFormToggle,
   isInfoPage,
 }) {
+  const supabase = createClient();
+  const { data: player } = usePlayer();
   const router = useRouter();
   const [iconToggle, setIconToggle] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -24,7 +29,7 @@ function NavBar({
   };
 
   const handleLogout = async () => {
-    // Add your logout logic here
+    await supabase.auth.signOut();
     router.push("/");
   };
 
@@ -42,22 +47,22 @@ function NavBar({
     { name: "Fields", value: false },
   ];
 
+  const playerFirstInitial = player?.first_name?.slice(0, 1);
+
   return (
-    <Container>
+    <>
       <Box
-        component="nav"
         sx={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          // backgroundColor: "white",
-          padding: "15px",
-          // position: "sticky",
-          // top: 0,
+          backgroundColor: "white",
+          padding: "0 30px 0",
           zIndex: 2,
+          borderBottom: "1px solid #0000003d",
         }}
       >
-        <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box sx={{ display: "flex" }}>
           <Box
             component="img"
             src={pnplogo.src}
@@ -79,9 +84,7 @@ function NavBar({
                 ))
               ) : (
                 <Button
-                  onClick={() =>
-                    router.push(`/locations/${loggedInPlayer?.location.id}`)
-                  }
+                  onClick={() => router.push(`/home`)}
                   sx={{ color: "black" }}
                 >
                   Home
@@ -168,7 +171,7 @@ function NavBar({
             aria-haspopup="true"
             color="inherit"
           >
-            {/* Insert Account Icon Here */}
+            <ProfileIcon playerFirstInitial={playerFirstInitial} />
           </IconButton>
           <Menu
             anchorEl={anchorEl}
@@ -191,7 +194,7 @@ function NavBar({
           </Menu>
         </Box>
       </Box>
-    </Container>
+    </>
   );
 }
 

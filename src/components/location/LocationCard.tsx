@@ -1,23 +1,23 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  selectLoggedInPlayer,
-  updateLocation,
-} from "../../redux/players/playersSlice";
+// import { useDispatch, useSelector } from "react-redux";
+// import {
+//   selectLoggedInPlayer,
+//   updateLocation,
+// } from "../../redux/players/playersSlice";
 import { Box, Typography } from "@mui/material";
 
 function LocationCard({ location }) {
   const router = useRouter();
-  const dispatch = useDispatch();
-  const loggedInPlayer = useSelector(selectLoggedInPlayer);
+  // const dispatch = useDispatch();
+  // const loggedInPlayer = useSelector(selectLoggedInPlayer);
   const [mouseOverImage, setMouseOverImage] = useState(1);
   const [mouseOverInfo, setMouseOverInfo] = useState(0);
 
-  const handleSetLocation = () => {
-    const id = loggedInPlayer.id;
-    dispatch(updateLocation({ location, id }));
-  };
+  // const handleSetLocation = () => {
+  //   const id = loggedInPlayer.id;
+  //   dispatch(updateLocation({ location, id }));
+  // };
 
   return (
     <Box
