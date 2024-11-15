@@ -1,4 +1,4 @@
-import Home from "@/src/components/screens/Home";
+import Home from "@/src/components/screens/home/Home";
 import Welcome from "@/src/components/screens/Welcome";
 import DashboardNavLayout from "@/src/layouts/DashboardNavLayout";
 import Head from "next/head";

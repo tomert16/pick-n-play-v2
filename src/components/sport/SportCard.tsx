@@ -34,14 +34,13 @@ function SportCard({ sport }) {
         sx={{
           opacity: mouseOverInfo,
           position: "absolute",
-          top: "15rem",
+          top: "50%",
           left: "50%",
-          transform: "translateX(-50%)",
+          transform: "translate(-50%, -50%)",
           fontSize: "1.5rem",
-          fontFamily: "Ultra, serif",
-          height: "3em",
-          color: "rgb(0, 0, 0)",
+          fontFamily: "Ultra",
           fontWeight: "bolder",
+          color: "rgb(0, 0, 0)",
         }}
       >
         {sport_type}

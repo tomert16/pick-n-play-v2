@@ -4,16 +4,19 @@ import sportsbg from "../assets/sportsbg.jpeg";
 import Header from "../components/Header";
 import { useEffect } from "react";
 import { Box, Button, Typography } from "@mui/material";
+import { usePlayer } from "../components/hooks/data";
+import { useUser } from "@supabase/auth-helpers-react";
+import { createClient } from "@/utils/supabase/client";
 
 function Landing() {
   const router = useRouter();
-  // const loggedInPlayer = useSelector(selectLoggedInPlayer); // Uncomment if needed
+  const supabase = createClient();
 
-  //   useEffect(() => {
-  //     if (loggedInPlayer) {
-  //       router.push("/welcome");
-  //     }
-  //   }, [loggedInPlayer, router]);
+  // useEffect(() => {
+  //   if (user) {
+  //     router.push("/home");
+  //   }
+  // }, [user, router]);
 
   return (
     <Box

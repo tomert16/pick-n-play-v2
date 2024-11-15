@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useRouter } from "next/router";
 // import { useDispatch } from 'react-redux';
 
@@ -17,18 +17,62 @@ import {
 import { createClient } from "@/utils/supabase/client";
 import DatePicker from "@/src/shared/components/DatePicker";
 import { Moment } from "moment-timezone";
+import { phoneNumberValidation } from "@/src/utils/phoneNumberValidation";
 
 function CompleteProfile() {
   const router = useRouter();
   const supabase = createClient();
-
   const [firstNameInput, setFirstNameInput] = useState<string>("");
   const [lastNameInput, setLastNameInput] = useState<string>("");
   const [birthDateInput, setBirthDateInput] = useState<Moment | null>(null);
   const [genderInput, setGenderInput] = useState<string>("");
   const [phoneNumberInput, setPhoneNumberInput] = useState<string>("");
+  const [firstNameError, setFirstNameError] = useState<string>("");
+  const [lastNameError, setLastNameError] = useState<string>("");
+
+  const phoneNumberError =
+    !!phoneNumberInput &&
+    phoneNumberInput.replace(/\D/g, "").length === 11 &&
+    !phoneNumberValidation(phoneNumberInput);
+
+  const invalidInput = "Invalid input";
 
   const [errors, setErrors] = useState<string>("");
+
+  const handleFirstName = (e: ChangeEvent<HTMLInputElement>) => {
+    setFirstNameInput(e.target.value.trimStart());
+    if (firstNameInput === "") {
+      setFirstNameError("");
+    } else if (e.target.validity.valid) {
+      setFirstNameError("");
+    } else {
+      setFirstNameError(invalidInput);
+    }
+  };
+
+  const handleLastName = (e: ChangeEvent<HTMLInputElement>) => {
+    setLastNameInput(e.target.value.trimStart());
+    if (lastNameInput === "") {
+      setLastNameError("");
+    } else if (e.target.validity.valid) {
+      setLastNameError("");
+    } else {
+      setLastNameError(invalidInput);
+    }
+  };
+
+  const handlePhoneNumber = (e: ChangeEvent<HTMLInputElement>) => {
+    setLastNameInput(e.target.value);
+    if (e.target.validity.valid) {
+      setLastNameError("");
+    } else {
+      setLastNameError(invalidInput);
+    }
+  };
+
+  const handleGender = (e: ChangeEvent<HTMLInputElement>) => {
+    setGenderInput(e.target.value);
+  };
 
   const handleCreateProfile = async (e: any) => {
     e.preventDefault();
@@ -89,8 +133,20 @@ function CompleteProfile() {
             fullWidth
             label="First Name"
             type="text"
+            variant="outlined"
+            autoComplete="first-name"
             value={firstNameInput}
-            onChange={(e) => setFirstNameInput(e.target.value)}
+            onChange={handleFirstName}
+            slotProps={{
+              input: {
+                inputProps: {
+                  maxLength: 50,
+                  pattern: "[a-zA-Z ]+",
+                },
+              },
+            }}
+            error={!!firstNameError}
+            helperText={firstNameError}
             required
             sx={{ mb: 2 }}
           />
@@ -99,13 +155,23 @@ function CompleteProfile() {
             label="Last Name"
             type="text"
             value={lastNameInput}
-            onChange={(e) => setLastNameInput(e.target.value)}
+            onChange={handleLastName}
+            slotProps={{
+              input: {
+                inputProps: {
+                  maxLength: 50,
+                  pattern: "[a-zA-Z ]+",
+                },
+              },
+            }}
+            error={!!lastNameError}
+            helperText={lastNameError}
             required
             sx={{ mb: 2 }}
           />
           <DatePicker
             value={birthDateInput}
-            onChange={(newValue) => setBirthDateInput(newValue!)}
+            onChange={(newValue: any) => setBirthDateInput(newValue)}
             placeholder="Date of birth"
           />
           <FormControl fullWidth>
@@ -128,7 +194,7 @@ function CompleteProfile() {
               select
               value={genderInput}
               placeholder="Gender"
-              onChange={(e) => setGenderInput(e.target.value)}
+              onChange={handleGender}
               required
               sx={{ mb: 2 }}
             >
@@ -144,7 +210,22 @@ function CompleteProfile() {
             onChange={(e) => setPhoneNumberInput(e.target.value)}
             required
             sx={{ mb: 2 }}
+            slotProps={{
+              input: {
+                inputProps: {
+                  inputMode: "numeric",
+                  maxLength: 11,
+                  pattern: "[0-9]+",
+                },
+              },
+            }}
+            error={!!phoneNumberError}
           />
+          {!!phoneNumberError ? (
+            <Typography color="red" textAlign="center">
+              Please enter a valid phone number
+            </Typography>
+          ) : null}
           <Button
             type="submit"
             variant="contained"
@@ -155,11 +236,11 @@ function CompleteProfile() {
             Enter
           </Button>
         </form>
-        {/* {errors && (
+        {errors && (
           <Typography color="error" sx={{ mt: 2 }}>
             {errors}
           </Typography>
-        )} */}
+        )}
       </Box>
     </Container>
   );

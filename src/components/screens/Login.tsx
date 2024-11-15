@@ -17,9 +17,20 @@ const Login = () => {
   const handleLogin = async (e: any) => {
     try {
       e.preventDefault();
-      const data = { email, password };
-      await supabase.auth.signInWithPassword(data);
-      router.push(`/home`);
+      const newUserData = { email, password };
+      let result = await supabase.auth.signInWithPassword(newUserData);
+      const { data, error } = result;
+
+      if (error) {
+        const message = error.message.includes("abcdefghijklmnopqrstuvwxyz")
+          ? "Your information is incorrect"
+          : error.message;
+
+        setError(message);
+        return false;
+      } else {
+        router.push("/home");
+      }
     } catch (err) {
       setError("Incorrect email or password");
     }

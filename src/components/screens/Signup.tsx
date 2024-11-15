@@ -9,22 +9,30 @@ import { createClient } from "@/utils/supabase/client";
 function Signup() {
   const supabase = createClient();
   const router = useRouter();
-  //   const dispatch = useDispatch();
 
   const [emailInput, setEmailInput] = useState<string>("");
   const [passwordInput, setPasswordInput] = useState<string>("");
 
   const [errors, setErrors] = useState<string>("");
 
-  const handleSignup = async (e) => {
+  const handleSignup = async (e: any) => {
     e.preventDefault();
     const newPlayer = {
       email: emailInput,
       password: passwordInput,
     };
     try {
-      await supabase.auth.signUp(newPlayer);
-      router.push("/signup/complete-profile");
+      let result = await supabase.auth.signUp(newPlayer);
+      const { data, error } = result;
+      if (error) {
+        const message = error.message.includes("abcdefghijklmnopqrstuvwxyz")
+          ? "Please enter your information correctly"
+          : error.message;
+        setErrors(message);
+        return false;
+      } else {
+        router.push("/signup/complete-profile");
+      }
     } catch (err) {
       setErrors("Invalid information");
     }

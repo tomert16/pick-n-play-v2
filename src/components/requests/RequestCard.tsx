@@ -1,10 +1,10 @@
 import React from "react";
 import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
-import { useRequestActions } from "../../hooks/useRequestActions";
+// import { useRequestActions } from "../../hooks/useRequestActions";
 import { Box, Typography, Button, IconButton } from "@mui/material";
 
 function RequestCard({ request }) {
-  const { like, dislike } = useRequestActions(request);
+  // const { like, dislike } = useRequestActions(request);
 
   return (
     <Box

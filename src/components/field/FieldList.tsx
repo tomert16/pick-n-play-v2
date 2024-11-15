@@ -1,9 +1,18 @@
 import { Container, Box, Typography } from "@mui/material";
 import FieldCard from "./FieldCard";
+import { useFields, usePlayer } from "../hooks/data";
+import { useMemo } from "react";
 
-function FieldList({ individualLocation }) {
+function FieldList({}) {
+  const { data: fields } = useFields();
+  const { data: player } = usePlayer();
+
+  const filteredFields = useMemo(() => {
+    return fields?.filter((field) => field.location_name === player.location);
+  }, [fields]);
+
   return (
-    <Box sx={{ padding: 3 }}>
+    <Container sx={{ textAlign: "center", marginBottom: "5rem" }}>
       <Typography
         variant="h1"
         className="home-prompt"
@@ -14,7 +23,6 @@ function FieldList({ individualLocation }) {
           fontFamily: "Ultra",
           textShadow: "2px 2px 3px rgb(255, 205, 98)",
           backgroundColor: "transparent",
-          marginBottom: 3,
         }}
       >
         Pick A Field
@@ -24,17 +32,16 @@ function FieldList({ individualLocation }) {
         sx={{
           display: "flex",
           flexWrap: "wrap",
-          marginTop: "-6rem",
+          marginTop: "3rem",
           justifyContent: "center",
-          gap: 2,
-          width: "100vw",
+          gap: "1.5rem",
         }}
       >
-        {individualLocation.fields.map((field) => (
+        {filteredFields?.map((field) => (
           <FieldCard key={field.id} field={field} />
         ))}
       </Box>
-    </Box>
+    </Container>
   );
 }
 
