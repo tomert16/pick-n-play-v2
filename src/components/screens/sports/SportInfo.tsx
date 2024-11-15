@@ -76,7 +76,7 @@ function SportInfo({ setSelectedMeetUp, locations }) {
     }
   }, [amountOfMeetUps]);
 
-  if (individualSport === undefined) return null;
+  // if (individualSport === undefined) return null;
 
   // Pagination variables and values
   const indexOfLastCard = currentSlide * amountOfMeetUps;

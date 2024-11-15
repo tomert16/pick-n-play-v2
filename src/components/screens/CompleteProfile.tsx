@@ -29,8 +29,6 @@ function CompleteProfile() {
   const [phoneNumberInput, setPhoneNumberInput] = useState<string>("");
   const [firstNameError, setFirstNameError] = useState<string>("");
   const [lastNameError, setLastNameError] = useState<string>("");
-  const [birthDateError, setBirthDateError] = useState<string>("");
-  const [genderError, setGenderError] = useState<string>("");
 
   const phoneNumberError =
     !!phoneNumberInput &&

@@ -23,6 +23,8 @@ function LocationCard({ location }) {
       .from("profiles")
       .update({ location: playerLocation })
       .eq("id", player.id!);
+
+    router.push("/home");
   };
 
   return (
@@ -37,9 +39,7 @@ function LocationCard({ location }) {
         cursor: "pointer",
       }}
       onClick={() => {
-        // router.push(`/locations/${location.id}`);
         handleSetLocation(location);
-        // window.location.reload();
       }}
       onMouseOver={() => {
         setMouseOverImage(0.3);

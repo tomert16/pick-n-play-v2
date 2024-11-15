@@ -8,10 +8,10 @@ import { Box, Container, Button } from "@mui/material";
 import ProfileIcon from "../shared/icons/ProfileIcon";
 import { createClient } from "@/utils/supabase/client";
 import { usePlayer } from "./hooks/data";
+import { useSpecificGameContext } from "./screens/home/SpecificGameContext";
 
 function NavBar({
   setSportFieldToggle,
-  isHome,
   isAdmin,
   handleFormToggle,
   isInfoPage,
@@ -22,6 +22,11 @@ function NavBar({
   const [iconToggle, setIconToggle] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [showMobileDropdown, setShowMobileDropdown] = useState(false);
+  const { setSpecificGame } = useSpecificGameContext();
+
+  const playerFirstInitial = player?.first_name?.slice(0, 1);
+
+  const isHome = router.pathname.includes("home");
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -29,8 +34,7 @@ function NavBar({
   };
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
-    router.push("/");
+    await supabase.auth.signOut().then(() => router.push("/"));
   };
 
   const handleAdminLogout = async () => {
@@ -46,8 +50,6 @@ function NavBar({
     { name: "Sports", value: true },
     { name: "Fields", value: false },
   ];
-
-  const playerFirstInitial = player?.first_name?.slice(0, 1);
 
   return (
     <>
@@ -73,10 +75,10 @@ function NavBar({
           {!isAdmin && (
             <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2, ml: 2 }}>
               {isHome ? (
-                links.map(({ name, value }) => (
+                links.map(({ name }) => (
                   <Button
                     key={name}
-                    onClick={() => setSportFieldToggle(value)}
+                    onClick={() => setSpecificGame(name)}
                     sx={{ color: "black" }}
                   >
                     {name}
@@ -188,9 +190,7 @@ function NavBar({
                 Profile
               </MenuItem>
             )}
-            <MenuItem onClick={isAdmin ? handleAdminLogout : handleLogout}>
-              Logout
-            </MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </Box>
       </Box>

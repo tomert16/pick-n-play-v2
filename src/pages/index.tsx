@@ -5,16 +5,18 @@ import Header from "../components/Header";
 import { useEffect } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import { usePlayer } from "../components/hooks/data";
+import { useUser } from "@supabase/auth-helpers-react";
+import { createClient } from "@/utils/supabase/client";
 
 function Landing() {
   const router = useRouter();
-  const { data: player } = usePlayer();
+  const supabase = createClient();
 
-  useEffect(() => {
-    if (player) {
-      router.push("/home");
-    }
-  }, [player, router]);
+  // useEffect(() => {
+  //   if (user) {
+  //     router.push("/home");
+  //   }
+  // }, [user, router]);
 
   return (
     <Box

@@ -11,56 +11,46 @@ import {
   InputLabel,
 } from "@mui/material";
 import RequestCard from "../requests/RequestCard";
-import { selectLoggedInPlayer } from "../redux/players/playersSlice";
-import {
-  createNewRequest,
-  fetchRequests,
-  selectRequests,
-} from "../redux/requests/requestsSlice";
-import {
-  fetchAllLocations,
-  selectAllLocations,
-} from "../redux/locations/locationsSlice";
 import { requestCreated, requestNotCreated } from "../ui/Toastify";
 import { ToastContainer } from "react-toastify";
 
 function Requests() {
-  const dispatch = useDispatch();
-  const loggedInPlayer = useSelector(selectLoggedInPlayer) || {};
-  const [name, setName] = useState("");
-  const [location, setLocation] = useState("");
+  // const dispatch = useDispatch();
+  // // const loggedInPlayer = useSelector(selectLoggedInPlayer) || {};
+  // const [name, setName] = useState("");
+  // const [location, setLocation] = useState("");
 
-  // fetch request data
-  const requests = useSelector(selectRequests);
-  useEffect(() => {
-    dispatch(fetchRequests()).then(() => {
-      dispatch(fetchRequests());
-    });
-  }, [dispatch]);
+  // // fetch request data
+  // const requests = useSelector(selectRequests);
+  // useEffect(() => {
+  //   dispatch(fetchRequests()).then(() => {
+  //     dispatch(fetchRequests());
+  //   });
+  // }, [dispatch]);
 
-  // fetch locations for form dropdown
-  const locations = useSelector(selectAllLocations);
-  useEffect(() => {
-    dispatch(fetchAllLocations());
-  }, [dispatch]);
+  // // fetch locations for form dropdown
+  // const locations = useSelector(selectAllLocations);
+  // useEffect(() => {
+  //   dispatch(fetchAllLocations());
+  // }, [dispatch]);
 
-  // create a new request
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const newRequest = {
-      name: name,
-      location: location,
-      player_id: loggedInPlayer.id,
-    };
-    const addNew = await dispatch(createNewRequest(newRequest));
-    if (!addNew.error) {
-      requestCreated();
-      setName("");
-      setLocation("");
-    } else {
-      requestNotCreated();
-    }
-  };
+  // // create a new request
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const newRequest = {
+  //     name: name,
+  //     location: location,
+  //     player_id: loggedInPlayer.id,
+  //   };
+  //   const addNew = await dispatch(createNewRequest(newRequest));
+  //   if (!addNew.error) {
+  //     requestCreated();
+  //     setName("");
+  //     setLocation("");
+  //   } else {
+  //     requestNotCreated();
+  //   }
+  // };
 
   return (
     <Box sx={{ padding: 3 }}>
